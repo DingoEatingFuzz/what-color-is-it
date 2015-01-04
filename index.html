@@ -1,0 +1,47 @@
+<!doctype html>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+<style>
+  html {
+    transition: background-color 1s ease-in-out;
+  }
+  body {
+    color: white;
+    position:fixed;
+    top:50%;
+    width:100%;
+    transform:translateY(-50%);
+    text-align:center;
+    font:100% 'Open Sans';
+  }
+  body:after {
+    content:attr(data-color);
+    display:block;
+    font-size:30%;
+    width:100%;
+    margin-top:3em;
+  }
+</style>
+<script>
+window.onload = function() {
+  var raf = requestAnimationFrame,
+    h = document.querySelector('html'),
+    b = document.body,
+    d, p;
+
+  raf(loop);
+
+  function loop() {
+    d = new Date();
+    p = [ pad(d.getHours()), pad(d.getMinutes()), pad(d.getSeconds()) ];
+    b.textContent = p.join(' : ');
+    b.setAttribute('data-color', h.style.backgroundColor = '#' + p.join(''));
+    h.style.fontSize = (window.innerWidth * 0.08).toFixed() + 'px';
+
+    raf(loop);
+  }
+
+  function pad(n) {
+    return n < 10 ? '0' + n : n;
+  }
+};
+</script>
